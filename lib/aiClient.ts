@@ -2,11 +2,11 @@ export async function generateExplanation(topic: string) {
   const apiKey = process.env.GROQ_API_KEY;
   const prompt = `Explain the topic "${topic}" in simple terms for a student. Keep it short and student-friendly.`;
 
-  const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+  const response = await fetch("https://api.groq.com/openai/v1/models", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${apiKey}`,
+      "Authorization": `Bearer ${process.env.GROQ_API_KEY}`,
     },
     body: JSON.stringify({
       model: "llama-3.1-70b-preview", // Correct Groq model
