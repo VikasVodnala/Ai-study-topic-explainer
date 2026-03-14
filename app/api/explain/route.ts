@@ -17,7 +17,8 @@ export async function POST(req: Request) {
     const explanation = await generateExplanation(topic); 
  
     return NextResponse.json({ explanation }); 
-  } catch (error) { 
+  } catch (error:any) { 
+    console.error("Backend Error:", error.message || error);
     return NextResponse.json( 
       { error: "Failed to generate explanation. Please try again." }, 
       { status: 500 } 
