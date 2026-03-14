@@ -6,7 +6,6 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     const body = await req.json();
     const { topic } = body;
 
-    // Error Handling for empty or invalid topic
     if (typeof topic !== "string" || topic.trim() === "") {
       return NextResponse.json(
         { error: "Please enter a topic to continue." },
@@ -14,11 +13,20 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       );
     }
 
-    const explanation = await generateExplanation(topic);
+    let explanation;
+    try {
+      explanation = await generateExplanation(topic);
+    } catch (err) {
+      console.error("AI client error:", err);
+      return NextResponse.json(
+        { error: "AI service failed. Check API key or configuration." },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json({ explanation });
   } catch (error) {
-    console.error(error); // helpful for debugging
+    console.error("Route error:", error);
     return NextResponse.json(
       { error: "Failed to generate explanation. Please try again." },
       { status: 500 }
