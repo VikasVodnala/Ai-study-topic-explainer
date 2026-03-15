@@ -9,7 +9,7 @@ export async function generateExplanation(topic: string) {
       "Authorization": `Bearer ${process.env.GROQ_API_KEY}`,
     },
     body: JSON.stringify({
-      model: "llama-3.1-70b-preview", // Correct Groq model
+      model: "openai/gpt-oss-120b", // Correct Groq model
       messages: [{ role: "user", content: prompt }],
       max_tokens: 300,
     }),
